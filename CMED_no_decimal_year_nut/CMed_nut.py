@@ -11,7 +11,7 @@ from tqdm import tqdm
 import torch
 import torch.nn as nn
 
-base_dir = 'where_is_the_folder/models/'
+base_dir = 'where_is_the_folder/'
 
 ## open the dataset
 df = ... 
@@ -75,8 +75,8 @@ def cmed_no3(df, psal, pres, doxy, temp, lon, lat) :
     features_model = ['pres_transf', 'longitude','latitude', 'psal', 'temp','doxy']
 
     # load input and ouput scaler
-    in_scaler = torch.load(base_dir+"input_scaler_no3.pt", weights_only=False)
-    out_scaler = torch.load(base_dir+"output_scaler_no3.pt", weights_only=False)
+    in_scaler = torch.load(base_dir+"scaler/input_scaler_no3.pt", weights_only=False)
+    out_scaler = torch.load(base_dir+"scaler/output_scaler_no3.pt", weights_only=False)
     mean = pd.Series(in_scaler['mean'], index=features_model)
     std  = pd.Series(in_scaler['std'],  index=features_model)
 
@@ -90,7 +90,7 @@ def cmed_no3(df, psal, pres, doxy, temp, lon, lat) :
     xtest_tensor = torch.tensor(X_all_scaled.values, dtype=torch.float32)
 
     # load neural network models and its architecture
-    checkpoint = torch.load(base_dir+"cmed_no3_models.pt", weights_only=False)
+    checkpoint = torch.load(base_dir+"models/cmed_no3_models.pt", weights_only=False)
     models = [] 
     for model_info in checkpoint:
         m = MLPModel(
@@ -153,8 +153,8 @@ def cmed_po4(df, psal, pres, doxy, temp, lon, lat):
     features_model = ['pres_transf', 'longitude','latitude','psal', 'temp','doxy']
 
     # load input and output scaler 
-    in_scaler = torch.load(base_dir+"input_scaler_po4.pt", weights_only=False)
-    out_scaler = torch.load(base_dir+"output_scaler_po4.pt", weights_only=False)
+    in_scaler = torch.load(base_dir+"scaler/input_scaler_po4.pt", weights_only=False)
+    out_scaler = torch.load(base_dir+"scaler/output_scaler_po4.pt", weights_only=False)
     mean = pd.Series(in_scaler['mean'], index=features_model)
     std  = pd.Series(in_scaler['std'],  index=features_model)
 
@@ -168,7 +168,7 @@ def cmed_po4(df, psal, pres, doxy, temp, lon, lat):
     xtest_tensor = torch.tensor(X_all_scaled.values, dtype=torch.float32)
 
     # load neural network models and its architecture
-    checkpoint = torch.load(base_dir+"cmed_po4_models.pt", weights_only=False)
+    checkpoint = torch.load(base_dir+"models/cmed_po4_models.pt", weights_only=False)
     models = [] 
     for model_info in checkpoint:
         m = MLPModel(
@@ -232,8 +232,8 @@ def cmed_sioh(df, date, psal, pres, doxy, temp, lon, lat):
     features_model = ['pres_transf', 'longitude','latitude', 'psal', 'temp', 'doxy']
 
     # load input and output scaler 
-    in_scaler = torch.load(base_dir+"input_scaler_sioh.pt", weights_only=False)
-    out_scaler = torch.load(base_dir+"output_scaler_sioh.pt", weights_only=False)
+    in_scaler = torch.load(base_dir+"scaler/input_scaler_sioh.pt", weights_only=False)
+    out_scaler = torch.load(base_dir+"scaler/output_scaler_sioh.pt", weights_only=False)
     mean = pd.Series(in_scaler['mean'], index=features_model)
     std  = pd.Series(in_scaler['std'],  index=features_model)
 
@@ -247,7 +247,7 @@ def cmed_sioh(df, date, psal, pres, doxy, temp, lon, lat):
     xtest_tensor = torch.tensor(X_all_scaled.values, dtype=torch.float32)
 
     # load neural network models and its architecture
-    checkpoint = torch.load(base_dir+"cmed_sioh_models.pt", weights_only=False)
+    checkpoint = torch.load(base_dir+"models/cmed_sioh_models.pt", weights_only=False)
     models = [] 
     for model_info in checkpoint:
         m = MLPModel(
